@@ -12,9 +12,19 @@ fn main() {
     }
     #[allow(unused)] // TODO: delete this line for Milestone 1
     let target = &args[1];
-
-    // TODO: Milestone 1: Get the target Process using psutils::get_target()
-    unimplemented!();
+    let process;
+    match ps_utils::get_target(target).expect("Wrong for getting process") {
+        Some(p) => {
+            process = p;
+            println!("Found pid {}", process.pid);
+        }
+        None => {
+            println!("Target \"{}\" did not match any running PIDs or executables", target);
+            std::process::exit(1);
+        }
+    } 
+    process.print();
+    
 }
 
 #[cfg(test)]
