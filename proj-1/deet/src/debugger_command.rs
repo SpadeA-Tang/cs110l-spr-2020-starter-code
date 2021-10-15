@@ -3,7 +3,10 @@ pub enum DebuggerCommand {
     Run(Vec<String>),
     CONTINUE,
     STACKTRACE,
+    BREAK(String),
 }
+
+
 
 impl DebuggerCommand {
     pub fn from_tokens(tokens: &Vec<&str>) -> Option<DebuggerCommand> {
@@ -17,6 +20,7 @@ impl DebuggerCommand {
             },
             "c" | "cont" | "continue" => Some(DebuggerCommand::CONTINUE),
             "bt" | "back" | "backtrace" => Some(DebuggerCommand::STACKTRACE),
+            "b" | "break" => Some(DebuggerCommand::BREAK(String::from(tokens[1]))),
             // Default case:
             _ => None,
         }
